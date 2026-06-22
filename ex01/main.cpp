@@ -8,9 +8,17 @@ std::string truncate(std::string str){
     return (str);
 }
 
-// bool reader(std::string inputContact, std::string &dest){
-
-// }
+bool readField(std::string const &field, std::string &dest){
+    std::cout << field;
+    if (!std::getline(std::cin, dest))
+        return false;
+    while (dest == ""){
+        std::cout << field;
+                if (!std::getline(std::cin, dest))
+                    return false;
+    }
+    return true;
+}
 
 int main(void)
 {
@@ -29,57 +37,21 @@ int main(void)
         if(inputCmd == "ADD")
         {
             Contact newcontact;
-
-            std::cout << "First Name: ";
-            if (!std::getline(std::cin, inputContact))
-                return 0;
-            while (inputContact == ""){
-                std::cout << "First Name: ";
-                if(!std::getline(std::cin, inputContact))
-                    return 0;
-            }
+            if (!readField("First Name: ", inputContact))
+                return (0);
             newcontact.setFirstName(inputContact);
-
-            std::cout <<"Last Name: ";
-            if (!std::getline(std::cin, inputContact))
-                return 0;
-            while (inputContact == ""){
-                std::cout << "Last Name: ";
-                if (!std::getline(std::cin, inputContact))
-                    return 0;
-            }
+            if (!readField("Last Name: ", inputContact))
+                return (0);
             newcontact.setLastName(inputContact);
-
-            std::cout <<"NickName: ";
-            if (!std::getline(std::cin, inputContact))
-                return(0);
-            while (inputContact == ""){
-                std::cout << "Nick Name: ";
-                if (!std::getline(std::cin, inputContact))
-                    return 0;
-            }
+            if (!readField("NickName: ", inputContact))
+                return (0);
             newcontact.setNickName(inputContact);
-
-            std::cout << "Phone Number: ";
-            if (!std::getline(std::cin, inputContact))
-                return 0;
-            while (inputContact == ""){
-                std::cout << "Phone Number: ";
-                if (!std::getline(std::cin, inputContact))
-                    return 0;
-            }
+            if (!readField("Phone Number: ", inputContact))
+                return (0);
             newcontact.setPhoneNumber(inputContact);
-
-            std::cout << "Darkest secret: ";
-            if (!std::getline(std::cin, inputContact))
-                return 0;
-            while (inputContact == ""){
-                std::cout << "Darkest secret: ";
-                if (!std::getline(std::cin, inputContact))
-                    return 0;
-            }
+            if (!readField("Darkest Secret: ", inputContact))
+                return (0);
             newcontact.setDarkestSecret(inputContact);
-
             phonebook.addContact(newcontact);
         }
         else if (inputCmd == "SEARCH")
