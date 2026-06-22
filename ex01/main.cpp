@@ -9,6 +9,7 @@ std::string truncate(std::string str){
 }
 
 bool readField(std::string const &field, std::string &dest){
+    
     std::cout << field;
     if (!std::getline(std::cin, dest))
         return false;
@@ -26,45 +27,57 @@ int main(void)
     std::string inputCmd;
     std::string inputContact;
 
-
-    std::cout << "Hello user, welcome to PhoneBook !" << std::endl;
-    std::cout << "Available commands : 'ADD', 'SEARCH', 'EXIT'." << std::endl;
+    std::cout << B_GREEN"Hello user, welcome to PhoneBook !" RESET << std::endl;
+    std::cout << B_YELLOW"Enter a command: 'ADD', 'SEARCH', 'EXIT'." RESET << std::endl;
+    std::cout<< B_BLUE;
     if (!std::getline(std::cin, inputCmd))
         return 0;
+    // std::cout<< RESET;
+    
 
-    while(inputCmd != "EXIT")
+    while(1)
     {
         if(inputCmd == "ADD")
         {
+            std::cout<< B_BLUE;
             Contact newcontact;
-            if (!readField("First Name: ", inputContact))
+            if (!readField(B_WHITE "First Name: " B_BLUE, inputContact))
                 return (0);
             newcontact.setFirstName(inputContact);
-            if (!readField("Last Name: ", inputContact))
+            if (!readField(B_WHITE"Last Name: " B_BLUE, inputContact))
                 return (0);
             newcontact.setLastName(inputContact);
-            if (!readField("NickName: ", inputContact))
+            if (!readField(B_WHITE"NickName: " B_BLUE, inputContact))
                 return (0);
             newcontact.setNickName(inputContact);
-            if (!readField("Phone Number: ", inputContact))
+            if (!readField(B_WHITE"Phone Number: " B_BLUE, inputContact))
                 return (0);
             newcontact.setPhoneNumber(inputContact);
-            if (!readField("Darkest Secret: ", inputContact))
+            if (!readField(B_WHITE"Darkest Secret: " B_BLUE, inputContact))
                 return (0);
             newcontact.setDarkestSecret(inputContact);
             phonebook.addContact(newcontact);
+            if (!std::getline(std::cin, inputCmd))
+            {
+                std::cout<< RESET;
+                return 0;
+
+            }
         }
         else if (inputCmd == "SEARCH")
         {
+            std::cout<< BGHI_GREEN;
             std::cout << std::setw(10) << "Index" << "|"
                       << std::setw(10) << "First Name" << "|"
                       << std::setw(10) << "Last Name" << "|"
-                      << std::setw(10) << "NickName" << std::endl;               
+                      << std::setw(10) << "NickName" <<std::endl;  
+            std::cout<< RESET;             
             for (int i = 0; i < phonebook.getCount(); i++){
                 std::cout << std::setw(10) << i << "|";
                 std::cout << std::setw(10) << truncate(phonebook.getContact(i).getFirstName()) << "|";
                 std::cout << std::setw(10) << truncate(phonebook.getContact(i).getLastName()) << "|";
                 std::cout << std::setw(10) << truncate(phonebook.getContact(i).getNickName()) << std::endl;
+                
             }
             std::cout << "Choose an index: ";
             if (!std::getline(std::cin, inputContact))
@@ -84,12 +97,16 @@ int main(void)
             else {
                 phonebook.printContact(index);
             }
-
-            
-
         }
+        else if (inputCmd == "EXIT")
+            return 1;
+
+        else
+        std::cout<< B_RED;
+        std::cout << "invalid command: 'ADD', 'SEARCH', 'EXIT'." << std::endl;
         if (!std::getline(std::cin, inputCmd))
             return 0;
+        std::cout<< RESET;
     }
 }
 

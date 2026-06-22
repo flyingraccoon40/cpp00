@@ -7,7 +7,7 @@ PhoneBook::PhoneBook () : _count(0), _index(0)
 
 PhoneBook::~PhoneBook() {
 
- std::cout << "GOOD BYE USER ..BOOP ..BOOP!" << std::endl;
+ std::cout << "\nGOOD BYE USER ..BOOP ..BOOP!" << std::endl;
 }
 
 void PhoneBook::addContact(Contact newc)
@@ -17,6 +17,8 @@ void PhoneBook::addContact(Contact newc)
     
     if (this->_count < 8)
     this->_count++;
+    std::cout << U_GREEN"A new contact has been added" RESET<< std::endl;
+    std::cout << B_YELLOW"Enter a command: 'ADD', 'SEARCH', 'EXIT'." RESET<< std::endl;
 
 }
 

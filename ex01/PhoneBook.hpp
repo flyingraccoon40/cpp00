@@ -3,6 +3,8 @@
 #include <iostream>
 #include <iomanip>
 #include "Contact.hpp"
+#include "color.hpp"
+#include <cstdlib>
 
 class PhoneBook{
     public:
