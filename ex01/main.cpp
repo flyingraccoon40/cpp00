@@ -13,7 +13,7 @@ bool readField(std::string const &field, std::string &dest){
     std::cout << field;
     if (!std::getline(std::cin, dest))
         return false;
-    while (dest == ""){
+    while (dest.empty()){
         std::cout << field;
                 if (!std::getline(std::cin, dest))
                     return false;
@@ -32,10 +32,7 @@ int main(void)
     std::cout<< B_BLUE;
     if (!std::getline(std::cin, inputCmd))
         return 0;
-    // std::cout<< RESET;
-    
-
-    while(1)
+    while(inputCmd != "EXIT")
     {
         if(inputCmd == "ADD")
         {
@@ -57,21 +54,14 @@ int main(void)
                 return (0);
             newcontact.setDarkestSecret(inputContact);
             phonebook.addContact(newcontact);
-            if (!std::getline(std::cin, inputCmd))
-            {
-                std::cout<< RESET;
-                return 0;
-
-            }
         }
         else if (inputCmd == "SEARCH")
         {
-            std::cout<< BGHI_GREEN;
+            std::cout<< B_GREEN;
             std::cout << std::setw(10) << "Index" << "|"
                       << std::setw(10) << "First Name" << "|"
                       << std::setw(10) << "Last Name" << "|"
-                      << std::setw(10) << "NickName" <<std::endl;  
-            std::cout<< RESET;             
+                      << std::setw(10) << "NickName" <<std::endl;           
             for (int i = 0; i < phonebook.getCount(); i++){
                 std::cout << std::setw(10) << i << "|";
                 std::cout << std::setw(10) << truncate(phonebook.getContact(i).getFirstName()) << "|";
@@ -82,31 +72,32 @@ int main(void)
             std::cout << "Choose an index: ";
             if (!std::getline(std::cin, inputContact))
                 return 0;
-            int index = atoi(inputContact.c_str());
+
+            int index = std::atoi(inputContact.c_str());
 
             bool is_valid = !inputContact.empty();
-            for (size_t i =0; i < inputContact.length(); i++) {
-                if(!isdigit(inputContact[i])){
+            for (size_t i = 0; i < inputContact.length(); i++) {
+                if(!std::isdigit(inputContact[i])){
                     is_valid = false;
                     break;
                 }
             }
-            if (is_valid == false || index >= phonebook.getCount()){
-                std::cout << "Try again with a valid index" << std::endl;
+            if (is_valid == false || index >= phonebook.getCount() || index < 0){
+                std::cout << "Invalid index, search cancelled" << std::endl;
+                std::cout << B_YELLOW"Enter a command: 'ADD', 'SEARCH', 'EXIT'." RESET << std::endl;
             }
             else {
                 phonebook.printContact(index);
             }
         }
-        else if (inputCmd == "EXIT")
-            return 1;
-
-        else
-        std::cout<< B_RED;
-        std::cout << "invalid command: 'ADD', 'SEARCH', 'EXIT'." << std::endl;
-        if (!std::getline(std::cin, inputCmd))
-            return 0;
-        std::cout<< RESET;
+        else {
+    	    std::cout<< B_RED;
+    	    std::cout << "invalid command: 'ADD', 'SEARCH', 'EXIT'." << std::endl;
+		}
+    if (!std::getline(std::cin, inputCmd))
+        return 0;   
     }
+    
+    return 0;
 }
 
